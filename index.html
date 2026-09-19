@@ -146,12 +146,38 @@
           </div>
         </div>
         <div class="contact-actions">
-          <a class="button primary" href="mailto:admin@ameursehili-llc.com?subject=Business%20or%20Local%20Support%20Request%20in%20Algeria">Send your request</a>
+          <button class="button primary" type="button" id="openRequestForm">Send your request</button>
           <a class="button whatsapp" href="https://wa.me/213549247619" target="_blank" rel="noopener noreferrer">Contact on WhatsApp</a>
         </div>
       </div>
     </section>
   </main>
+
+  <div class="request-modal" id="requestModal" aria-hidden="true">
+    <div class="request-modal-backdrop" data-close-request></div>
+    <div class="request-modal-card" role="dialog" aria-modal="true" aria-labelledby="requestFormTitle">
+      <button class="request-close" type="button" aria-label="Close request form" data-close-request>&times;</button>
+      <p class="eyebrow">SEND YOUR REQUEST</p>
+      <h2 id="requestFormTitle">Tell us what you need in Algeria.</h2>
+      <p class="request-intro">Give us a few details about your request and we will review it.</p>
+      <form class="request-form" id="requestForm">
+        <div class="form-grid">
+          <label><span>Full Name</span><input type="text" name="name" autocomplete="name" required></label>
+          <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+          <label><span>Country</span><input type="text" name="country" autocomplete="country-name" required></label>
+          <label><span>What do you need?</span><select name="service" required>
+            <option value="" selected disabled>Select a service</option>
+            <option>Local representation</option><option>Sourcing &amp; suppliers</option>
+            <option>Market &amp; company research</option><option>Coordination &amp; projects</option>
+            <option>Purchasing &amp; logistics</option><option>Custom local request</option>
+          </select></label>
+        </div>
+        <label><span>Request details</span><textarea name="details" rows="6" placeholder="Tell us what you are looking for and what you want to accomplish in Algeria." required></textarea></label>
+        <button class="button primary request-submit" type="submit">Continue to Email</button>
+        <p class="form-note">Your email app will open with the request details prepared for admin@ameursehili-llc.com.</p>
+      </form>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="container footer-inner">
@@ -175,6 +201,45 @@
           target.scrollIntoView({ behavior: 'smooth' });
         }
       });
+    });
+
+    const requestModal = document.getElementById('requestModal');
+    const openRequestForm = document.getElementById('openRequestForm');
+    const requestForm = document.getElementById('requestForm');
+
+    function closeRequestModal() {
+      requestModal.classList.remove('is-open');
+      requestModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    openRequestForm.addEventListener('click', () => {
+      requestModal.classList.add('is-open');
+      requestModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      requestForm.querySelector('input[name="name"]').focus();
+    });
+
+    requestModal.querySelectorAll('[data-close-request]').forEach(element => {
+      element.addEventListener('click', closeRequestModal);
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && requestModal.classList.contains('is-open')) closeRequestModal();
+    });
+
+    requestForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const data = new FormData(requestForm);
+      const subject = 'Business or Local Support Request in Algeria';
+      const body = [
+        'Hello AMEUR SEHILI LLC,', '',
+        'I would like to request assistance in Algeria.', '',
+        `Full Name: ${data.get('name')}`, `Email: ${data.get('email')}`,
+        `Country: ${data.get('country')}`, `Request Type: ${data.get('service')}`, '',
+        'Request Details:', data.get('details'), '', 'Thank you.'
+      ].join('\n');
+      window.location.href = `mailto:admin@ameursehili-llc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
   </script>
 </body>
