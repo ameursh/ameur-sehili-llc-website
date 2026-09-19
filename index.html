@@ -133,13 +133,7 @@
         </div>
       </div>
     </section>
-
-    <div class="request-success" id="requestSuccess" role="status" aria-live="polite">
-    <strong>Request sent successfully.</strong>
-    <span>Thank you. We will review your request and get back to you.</span>
-  </div>
-
-  <section id="contact" class="section contact">
+<section id="contact" class="section contact">
       <div class="container contact-box">
         <div>
           <p class="eyebrow">HAVE A REQUEST IN ALGERIA?</p>
@@ -165,14 +159,20 @@
       <p class="eyebrow">SEND YOUR REQUEST</p>
       <h2 id="requestFormTitle">Tell us what you need in Algeria.</h2>
       <p class="request-intro">Give us a few details about your request and we will review it.</p>
+      <div class="request-success-modal" id="requestSuccess" role="status" aria-live="polite">
+        <div class="request-success-icon">✓</div>
+        <h3>Request sent successfully</h3>
+        <p>Thank you. We will review your request and get back to you.</p>
+        <button class="button secondary request-done" type="button" id="requestDone">Done</button>
+      </div>
+
       <form class="request-form" id="requestForm"
-        action="https://formsubmit.co/admin@ameursehili-llc.com"
+        action="https://formsubmit.co/ajax/admin@ameursehili-llc.com"
         method="POST">
         <input type="hidden" name="_subject" value="New Business or Local Support Request in Algeria">
         <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="https://www.ameursehili-llc.com/?request=sent#contact">
-        <div class="form-grid">
+<div class="form-grid">
           <label><span>Full Name</span><input type="text" name="name" autocomplete="name" required></label>
           <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
           <label><span>Country</span><input type="text" name="country" autocomplete="country-name" required></label>
@@ -214,21 +214,21 @@
       });
     });
 
-    const requestSuccess = document.getElementById('requestSuccess');
-
-    if (new URLSearchParams(window.location.search).get('request') === 'sent') {
-      requestSuccess.classList.add('is-visible');
-      history.replaceState({}, document.title, window.location.pathname + '#contact');
-    }
-
     const requestModal = document.getElementById('requestModal');
     const openRequestForm = document.getElementById('openRequestForm');
     const requestForm = document.getElementById('requestForm');
+    const requestSuccess = document.getElementById('requestSuccess');
+    const requestDone = document.getElementById('requestDone');
+    const requestSubmit = requestForm.querySelector('.request-submit');
 
     function closeRequestModal() {
       requestModal.classList.remove('is-open');
       requestModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
+      requestSuccess.classList.remove('is-visible');
+      requestForm.style.display = '';
+      requestSubmit.disabled = false;
+      requestSubmit.textContent = 'Send Request';
     }
 
     openRequestForm.addEventListener('click', () => {
@@ -242,10 +242,36 @@
       element.addEventListener('click', closeRequestModal);
     });
 
+    requestDone.addEventListener('click', closeRequestModal);
+
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && requestModal.classList.contains('is-open')) closeRequestModal();
+      if (event.key === 'Escape' && requestModal.classList.contains('is-open')) {
+        closeRequestModal();
+      }
     });
 
+    requestForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      requestSubmit.disabled = true;
+      requestSubmit.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(requestForm.action, {
+          method: 'POST',
+          body: new FormData(requestForm),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (!response.ok) throw new Error('Submission failed');
+
+        requestForm.reset();
+        requestForm.style.display = 'none';
+        requestSuccess.classList.add('is-visible');
+      } catch (error) {
+        requestSubmit.disabled = false;
+        requestSubmit.textContent = 'Send Request';
+        alert('We could not send your request right now. Please try again or contact us on WhatsApp.');
+      }
     });
   </script>
 </body>
