@@ -134,7 +134,12 @@
       </div>
     </section>
 
-    <section id="contact" class="section contact">
+    <div class="request-success" id="requestSuccess" role="status" aria-live="polite">
+    <strong>Request sent successfully.</strong>
+    <span>Thank you. We will review your request and get back to you.</span>
+  </div>
+
+  <section id="contact" class="section contact">
       <div class="container contact-box">
         <div>
           <p class="eyebrow">HAVE A REQUEST IN ALGERIA?</p>
@@ -160,7 +165,13 @@
       <p class="eyebrow">SEND YOUR REQUEST</p>
       <h2 id="requestFormTitle">Tell us what you need in Algeria.</h2>
       <p class="request-intro">Give us a few details about your request and we will review it.</p>
-      <form class="request-form" id="requestForm">
+      <form class="request-form" id="requestForm"
+        action="https://formsubmit.co/admin@ameursehili-llc.com"
+        method="POST">
+        <input type="hidden" name="_subject" value="New Business or Local Support Request in Algeria">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://www.ameursehili-llc.com/?request=sent#contact">
         <div class="form-grid">
           <label><span>Full Name</span><input type="text" name="name" autocomplete="name" required></label>
           <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
@@ -173,8 +184,8 @@
           </select></label>
         </div>
         <label><span>Request details</span><textarea name="details" rows="6" placeholder="Tell us what you are looking for and what you want to accomplish in Algeria." required></textarea></label>
-        <button class="button primary request-submit" type="submit">Continue to Email</button>
-        <p class="form-note">Your email app will open with the request details prepared for admin@ameursehili-llc.com.</p>
+        <button class="button primary request-submit" type="submit">Send Request</button>
+        <p class="form-note">Your request will be sent securely to our business email.</p>
       </form>
     </div>
   </div>
@@ -203,6 +214,13 @@
       });
     });
 
+    const requestSuccess = document.getElementById('requestSuccess');
+
+    if (new URLSearchParams(window.location.search).get('request') === 'sent') {
+      requestSuccess.classList.add('is-visible');
+      history.replaceState({}, document.title, window.location.pathname + '#contact');
+    }
+
     const requestModal = document.getElementById('requestModal');
     const openRequestForm = document.getElementById('openRequestForm');
     const requestForm = document.getElementById('requestForm');
@@ -228,18 +246,6 @@
       if (event.key === 'Escape' && requestModal.classList.contains('is-open')) closeRequestModal();
     });
 
-    requestForm.addEventListener('submit', event => {
-      event.preventDefault();
-      const data = new FormData(requestForm);
-      const subject = 'Business or Local Support Request in Algeria';
-      const body = [
-        'Hello AMEUR SEHILI LLC,', '',
-        'I would like to request assistance in Algeria.', '',
-        `Full Name: ${data.get('name')}`, `Email: ${data.get('email')}`,
-        `Country: ${data.get('country')}`, `Request Type: ${data.get('service')}`, '',
-        'Request Details:', data.get('details'), '', 'Thank you.'
-      ].join('\n');
-      window.location.href = `mailto:admin@ameursehili-llc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
   </script>
 </body>
