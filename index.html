@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AMEUR SEHILI LLC — Professional business consulting and services.">
+  <meta name="theme-color" content="#0b1220">
+  <title>AMEUR SEHILI LLC | Professional Business Services</title>
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="AMEUR SEHILI LLC home">
+        <img src="logo.png" alt="AMEUR SEHILI LLC logo">
+        <span>AMEUR SEHILI LLC</span>
+      </a>
+
+      <nav aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact" class="nav-cta">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-shape shape-one"></div>
+      <div class="hero-shape shape-two"></div>
+
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">PROFESSIONAL BUSINESS SERVICES</p>
+          <h1>Clear thinking.<br><span>Practical solutions.</span></h1>
+          <p class="hero-text">
+            AMEUR SEHILI LLC provides professional business support and consulting
+            services focused on practical solutions, clear communication, and long-term value.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#contact">Get in touch</a>
+            <a class="button secondary" href="#services">Our services</a>
+          </div>
+        </div>
+
+        <div class="hero-mark" aria-hidden="true">
+          <div class="mark-glow"></div>
+          <img src="logo.png" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container narrow">
+        <p class="eyebrow">ABOUT US</p>
+        <h2>Professional support for your next step.</h2>
+        <p class="section-text">
+          We work with individuals and businesses to understand their needs,
+          identify practical opportunities, and support informed business decisions.
+        </p>
+      </div>
+    </section>
+
+    <section id="services" class="section section-light">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">WHAT WE DO</p>
+            <h2>Services built around your needs.</h2>
+          </div>
+          <p class="section-intro">
+            A flexible approach designed for projects that require clear direction
+            and dependable professional support.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-number">01</div>
+            <h3>Business Consulting</h3>
+            <p>Practical guidance for business planning, opportunities, and day-to-day decisions.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">02</div>
+            <h3>Business Support</h3>
+            <p>Professional support tailored to specific projects, needs, and objectives.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">03</div>
+            <h3>Project Assistance</h3>
+            <p>Structured support to help move projects from ideas and planning toward execution.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section accent-section">
+      <div class="container accent-grid">
+        <div>
+          <p class="eyebrow">OUR APPROACH</p>
+          <h2>Simple, professional, focused.</h2>
+        </div>
+        <div class="approach-list">
+          <div><strong>01</strong><span>Understand the objective</span></div>
+          <div><strong>02</strong><span>Identify practical options</span></div>
+          <div><strong>03</strong><span>Support the next step</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="container contact-box">
+        <div>
+          <p class="eyebrow">CONTACT</p>
+          <h2>Let's discuss your next project.</h2>
+          <p>
+            Tell us what you are working on and what you need help with.
+            We will be happy to discuss the next steps.
+          </p>
+        </div>
+        <a class="button primary" href="mailto:info@ameursehili-llc.com">Contact us</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="AMEUR SEHILI LLC logo">
+        <span>AMEUR SEHILI LLC</span>
+      </div>
+      <span>© 2026 AMEUR SEHILI LLC. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', event => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
